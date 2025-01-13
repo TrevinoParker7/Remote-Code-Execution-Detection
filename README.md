@@ -53,11 +53,12 @@ Once the suspicious activity was identified:
 To detect this type of activity, we used the following KQL query in Microsoft Defender for Endpoint (MDE):
 
 ```kusto
+let target_machine = "whateverYourMachineIsName";
 DeviceProcessEvents
 | where DeviceName == "trce12"
 | where AccountName != "system"
 | where InitiatingProcessCommandLine has_any ("Invoke-WebRequest", "Start-Process")
-| order by Timestamp desc
+| order by Timestamp desc 
 ```
 
 This query was designed to look for any PowerShell command that used Invoke-WebRequest to download a file and Start-Process to execute it. Specifically, it captures the activity related to the malicious payload execution, allowing us to detect the attack's presence within the last hour. 🧐
@@ -86,10 +87,12 @@ cmd.exe /c powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "Invoke-We
     - The query will detect **PowerShell** invoking **Invoke-WebRequest** and optionally **Start-Process**.
 
 ```kusto
-let VMName = "my-vm-name";
+let target_machine = "whateverYourMachineIsName";
 DeviceProcessEvents
-| where DeviceName == VMName
-| where InitiatingProcessCommandLine contains "Invoke-WebRequest" and InitiatingProcessCommandLine contains "Start-Process"
+| where DeviceName == "trce12"
+| where AccountName != "system"
+| where InitiatingProcessCommandLine has_any ("Invoke-WebRequest", "Start-Process")
+| order by Timestamp desc 
 ```
 
 ---
@@ -97,10 +100,38 @@ DeviceProcessEvents
 ### Step 5: Create a Detection Rule Based on the Query 🚨🔔
 
 1. **Detection Rule Settings**:
-    - Set the detection rule with the following options:
-        - ✅ **Isolate Device**
-        - ✅ **Collect Investigation Package**
-    - This ensures automatic isolation and investigation when the rule is triggered.
+
+   To create a detection rule, click the top right corner where it says **"Create Detection Rule"**. You’ll then be taken to the screen where you can complete the **Alert Details**.
+
+   ![Screenshot 2025-01-12 183822](https://github.com/user-attachments/assets/adf0ef1d-137d-423f-845b-b0e7e4b94611)
+
+2. **Impacted Entities**:
+
+   Define the impacted entities (in this case, the specific VM) for the detection rule.
+
+   ![Screenshot 2025-01-12 184224](https://github.com/user-attachments/assets/c8d36a77-8a7f-4cb6-8631-c26ad5362858)
+
+3. **Actions**:
+
+   Choose the actions that should be taken when the detection rule is triggered. For this rule, we want to ensure that the VM is isolated and an investigation package is collected.
+
+   ![Screenshot 2025-01-12 184738](https://github.com/user-attachments/assets/e8e46c68-a839-45b8-9b9b-9041773ff989)
+
+4. **Summary**:
+
+   Review the summary of the detection rule before you click submit it.
+
+   ![Screenshot 2025-01-12 184936](https://github.com/user-attachments/assets/50fdb93e-50c8-478e-8ad7-a072bc6984b3)
+
+   - Set the detection rule with the following options:
+     - ✅ **Isolate Device**
+     - ✅ **Collect Investigation Package**
+   
+   These settings ensure that the VM is automatically isolated and an investigation package is collected whenever the rule is triggered.
+
+---
+
+By setting this up, you'll have a proactive defense mechanism to automatically isolate compromised systems and collect critical investigation data when suspicious activity, such as PowerShell-based RCE, is detected. 🛡️💻
 
 ---
 
