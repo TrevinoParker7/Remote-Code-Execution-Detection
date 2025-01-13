@@ -1,4 +1,4 @@
-# Threat Hunt Report: Remote Code Execution Detection (RCE) & Create Detection Rule 📊🛡️
+# 🎯Threat Hunt Report: Remote Code Execution Detection (RCE) & Create Detection Rule 📊🛡️
 
 ![image (17)](https://github.com/user-attachments/assets/29728b8d-d5e1-4ce0-b939-d7f0d81d49c5)
 
