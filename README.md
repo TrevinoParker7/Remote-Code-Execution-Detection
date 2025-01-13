@@ -151,6 +151,8 @@ By setting this up, you'll have a proactive defense mechanism to automatically i
 2. **VM Isolation Status**: 
     - Click on the three-dot menu next to the VM.
     - If isolated, you can release it here. For now, check **Action Center** for the **Investigation Package**.
+    - 
+![Screenshot 2025-01-12 192944](https://github.com/user-attachments/assets/31819b70-5a5b-455e-8b83-f8ced65d23b9)
 
 3. **Review the Investigation Package**: 
     - This package contains a detailed collection of data for incident analysis, including:
@@ -159,6 +161,8 @@ By setting this up, you'll have a proactive defense mechanism to automatically i
         - Network connections
         - Event logs
         - Memory dumps
+
+![Screenshot 2025-01-12 193112](https://github.com/user-attachments/assets/a26d23b8-ea11-4233-8666-b46a22147d6e)
 
 ---
 
