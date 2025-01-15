@@ -51,7 +51,18 @@ Once the suspicious activity was identified:
 ### 1. KQL Query to Find the RCE PowerShell Payload 🔍
 
 To detect this type of activity, we used the following KQL query in Microsoft Defender for Endpoint (MDE):
-
+```kql
+DeviceFileEvents
+| top 20 by Timestamp desc
+```
+```kql
+DeviceNetworkEvents
+| top 20 by Timestamp desc
+```
+```kql
+DeviceProcessEvents
+| top 20 by Timestamp desc
+```
 ```kusto
 let target_machine = "whateverYourMachineIsName";
 DeviceProcessEvents
